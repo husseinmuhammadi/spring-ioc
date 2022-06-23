@@ -1,13 +1,23 @@
 package com.javastudio.tutorial;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.javastudio.tutorial.api.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Application {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
+    @Autowired
+    ProductService productService;
 
     public static void main(String[] args) {
-        LOGGER.info("Application started!");
+        AbstractApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        context.getBean("application", Application.class).run();
+    }
+
+    public void run() {
+        productService.findAll();
     }
 }
